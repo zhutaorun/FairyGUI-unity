@@ -38,6 +38,10 @@ TestResult.xml
 [Rr]eleasePS/
 dlldata.c
 
+# ASP.NET 5
+project.lock.json
+artifacts/
+
 *_i.c
 *_p.c
 *_i.h
@@ -125,6 +129,7 @@ DocProject/Help/html
 
 # Click-Once directory
 publish/
+bak/
 
 # Publish Web Output
 *.[Pp]ublish.xml
