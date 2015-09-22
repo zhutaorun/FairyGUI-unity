@@ -483,7 +483,7 @@ namespace FairyGUI
         {
             if (parent != null && _visible)
             {
-#if (UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
+#if !(UNITY_4_6_DOWNWARDS)
                 cachedTransform.SetParent(parent.cachedTransform, false);
 #else
                 cachedTransform.parent = parent.cachedTransform;
@@ -496,7 +496,7 @@ namespace FairyGUI
             }
             else
             {
-#if (UNITY_4_6 || UNITY_5_0 || UNITY_5_1)
+#if !(UNITY_4_6_DOWNWARDS)
                 cachedTransform.SetParent(null, false);
 #else
                 cachedTransform.parent = null;

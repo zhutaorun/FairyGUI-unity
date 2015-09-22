@@ -11,6 +11,7 @@
     <AssemblyName>FairyGUI</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <MonoMdbGenerator>pdb2mdb.bat</MonoMdbGenerator>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -18,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;UNITY_4_6</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
@@ -132,7 +133,12 @@
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
   </Target>-->
+  <Target Name="AfterBuild">
+    <CallTarget Targets="GenerateMonoSymbols" Condition=" Exists('$(OutputPath)\$(AssemblyName).pdb') " />
+  </Target>
+  <Target Name="GenerateMonoSymbols">
+    <Message Text="$(ProjectName) -&gt; $(TargetPath).mdb" Importance="High" />
+    <Exec Command="&quot;$(ProjectDir)$(MonoMdbGenerator)&quot; $(AssemblyName)" WorkingDirectory="$(MSBuildProjectDirectory)\$(OutputPath)" />
+  </Target>
 </Project>
