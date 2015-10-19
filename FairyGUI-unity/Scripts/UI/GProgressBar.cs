@@ -161,7 +161,6 @@ namespace FairyGUI
                 _barMaxHeightDelta = this.height - _barMaxHeight;
                 _barStartY = _barObjectV.y;
             }
-            Update();
         }
 
         override public void Setup_AfterAdd(XML cxml)
@@ -169,14 +168,13 @@ namespace FairyGUI
             base.Setup_AfterAdd(cxml);
 
             XML xml = cxml.GetNode("ProgressBar");
-            if (xml == null)
-                return;
+            if (xml != null)
+            {
+                _value = xml.GetAttributeInt("value");
+                _max = xml.GetAttributeInt("max");
+            }
 
-            _value = xml.GetAttributeInt("value");
-            _max = xml.GetAttributeInt("max");
-
-            if (!this.underConstruct)
-                Update();
+            Update();
         }
 
         override protected void HandleSizeChanged()
@@ -187,7 +185,9 @@ namespace FairyGUI
                 _barMaxWidth = this.width - _barMaxWidthDelta;
             if (_barObjectV != null)
                 _barMaxHeight = this.height - _barMaxHeightDelta;
-            Update();
+
+            if (!this.underConstruct)
+                Update();
         }
     }
 }

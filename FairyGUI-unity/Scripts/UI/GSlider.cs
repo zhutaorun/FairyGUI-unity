@@ -158,11 +158,11 @@ namespace FairyGUI
             base.Setup_AfterAdd(cxml);
 
             XML xml = cxml.GetNode("Slider");
-            if (xml == null)
-                return;
-
-            _value = xml.GetAttributeInt("value");
-            _max = xml.GetAttributeInt("max");
+            if (xml != null)
+            {
+                _value = xml.GetAttributeInt("value");
+                _max = xml.GetAttributeInt("max");
+            }
             Update();
         }
 
@@ -174,6 +174,7 @@ namespace FairyGUI
                 _barMaxWidth = this.width - _barMaxWidthDelta;
             if (_barObjectV != null)
                 _barMaxHeight = this.height - _barMaxHeightDelta;
+
             if (!this.underConstruct)
                 Update();
         }
