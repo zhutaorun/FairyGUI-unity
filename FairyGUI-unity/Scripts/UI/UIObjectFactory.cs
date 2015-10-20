@@ -5,114 +5,114 @@ using FairyGUI.Utils;
 
 namespace FairyGUI
 {
-    public class UIObjectFactory
-    {
-        internal static Dictionary<string, ConstructorInfo> packageItemExtensions = new Dictionary<string, ConstructorInfo>();
-        static ConstructorInfo loaderConstructor;
+	public class UIObjectFactory
+	{
+		internal static Dictionary<string, ConstructorInfo> packageItemExtensions = new Dictionary<string, ConstructorInfo>();
+		static ConstructorInfo loaderConstructor;
 
-        public static void SetPackageItemExtension(string url, System.Type type)
-        {
-            packageItemExtensions[url.Substring(5)] = type.GetConstructor(System.Type.EmptyTypes);
-        }
+		public static void SetPackageItemExtension(string url, System.Type type)
+		{
+			packageItemExtensions[url.Substring(5)] = type.GetConstructor(System.Type.EmptyTypes);
+		}
 
-        public static void SetLoaderExtension(System.Type type)
-        {
-            loaderConstructor = type.GetConstructor(System.Type.EmptyTypes);
-        }
+		public static void SetLoaderExtension(System.Type type)
+		{
+			loaderConstructor = type.GetConstructor(System.Type.EmptyTypes);
+		}
 
-        public static GObject NewObject(PackageItem pi)
-        {
-            switch (pi.type)
-            {
-                case PackageItemType.Image:
-                    return new GImage();
+		public static GObject NewObject(PackageItem pi)
+		{
+			switch (pi.type)
+			{
+				case PackageItemType.Image:
+					return new GImage();
 
-                case PackageItemType.MovieClip:
-                    return new GMovieClip();
+				case PackageItemType.MovieClip:
+					return new GMovieClip();
 
-                case PackageItemType.Component:
-                    {
-                        ConstructorInfo extentionConstructor;
-                        if (packageItemExtensions.TryGetValue(pi.owner.id + pi.id, out extentionConstructor))
-                        {
-                            GComponent g = (GComponent)extentionConstructor.Invoke(null);
-                            if (g == null)
-                                throw new Exception("Unable to create instance of '" + extentionConstructor.Name + "'");
+				case PackageItemType.Component:
+					{
+						ConstructorInfo extentionConstructor;
+						if (packageItemExtensions.TryGetValue(pi.owner.id + pi.id, out extentionConstructor))
+						{
+							GComponent g = (GComponent)extentionConstructor.Invoke(null);
+							if (g == null)
+								throw new Exception("Unable to create instance of '" + extentionConstructor.Name + "'");
 
-                            return g;
-                        }
+							return g;
+						}
 
-                        pi.Load();
-                        XML xml = pi.componentData;
-                        string extention = xml.GetAttribute("extention");
-                        if (extention != null)
-                        {
-                            switch (extention)
-                            {
-                                case "Button":
-                                    return new GButton();
+						pi.Load();
+						XML xml = pi.componentData;
+						string extention = xml.GetAttribute("extention");
+						if (extention != null)
+						{
+							switch (extention)
+							{
+								case "Button":
+									return new GButton();
 
-                                case "Label":
-                                    return new GLabel();
+								case "Label":
+									return new GLabel();
 
-                                case "ProgressBar":
-                                    return new GProgressBar();
+								case "ProgressBar":
+									return new GProgressBar();
 
-                                case "Slider":
-                                    return new GSlider();
+								case "Slider":
+									return new GSlider();
 
-                                case "ScrollBar":
-                                    return new GScrollBar();
+								case "ScrollBar":
+									return new GScrollBar();
 
-                                case "ComboBox":
-                                    return new GComboBox();
+								case "ComboBox":
+									return new GComboBox();
 
-                                default:
-                                    return new GComponent();
-                            }
-                        }
-                        else
-                            return new GComponent();
-                    }
-            }
-            return null;
-        }
+								default:
+									return new GComponent();
+							}
+						}
+						else
+							return new GComponent();
+					}
+			}
+			return null;
+		}
 
-        public static GObject NewObject(string type)
-        {
-            switch (type)
-            {
-                case "image":
-                    return new GImage();
+		public static GObject NewObject(string type)
+		{
+			switch (type)
+			{
+				case "image":
+					return new GImage();
 
-                case "movieclip":
-                    return new GMovieClip();
+				case "movieclip":
+					return new GMovieClip();
 
-                case "component":
-                    return new GComponent();
+				case "component":
+					return new GComponent();
 
-                case "text":
-                    return new GTextField();
+				case "text":
+					return new GTextField();
 
-                case "richtext":
-                    return new GRichTextField();
+				case "richtext":
+					return new GRichTextField();
 
-                case "group":
-                    return new GGroup();
+				case "group":
+					return new GGroup();
 
-                case "list":
-                    return new GList();
+				case "list":
+					return new GList();
 
-                case "graph":
-                    return new GGraph();
+				case "graph":
+					return new GGraph();
 
-                case "loader":
-                    if (loaderConstructor != null)
-                        return (GLoader)loaderConstructor.Invoke(null);
-                    else
-                        return new GLoader();
-            }
-            return null;
-        }
-    }
+				case "loader":
+					if (loaderConstructor != null)
+						return (GLoader)loaderConstructor.Invoke(null);
+					else
+						return new GLoader();
+			}
+			return null;
+		}
+	}
 }

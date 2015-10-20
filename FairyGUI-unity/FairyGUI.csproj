@@ -11,7 +11,6 @@
     <AssemblyName>FairyGUI</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <MonoMdbGenerator>pdb2mdb.bat</MonoMdbGenerator>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -41,8 +40,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="UnityEngine">
-      <HintPath>Lib\UnityEngine.dll</HintPath>
+    <Reference Include="UnityEngine5.x">
+      <HintPath>Lib\UnityEngine5.x.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -133,12 +132,8 @@
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
-  </Target>-->
+  </Target>
   <Target Name="AfterBuild">
     <CallTarget Targets="GenerateMonoSymbols" Condition=" Exists('$(OutputPath)\$(AssemblyName).pdb') " />
-  </Target>
-  <Target Name="GenerateMonoSymbols">
-    <Message Text="$(ProjectName) -&gt; $(TargetPath).mdb" Importance="High" />
-    <Exec Command="&quot;$(ProjectDir)$(MonoMdbGenerator)&quot; $(AssemblyName)" WorkingDirectory="$(MSBuildProjectDirectory)\$(OutputPath)" />
-  </Target>
+  </Target>-->
 </Project>

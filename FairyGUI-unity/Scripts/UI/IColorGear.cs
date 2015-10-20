@@ -2,8 +2,8 @@
 
 namespace FairyGUI
 {
-    public interface IColorGear
-    {
-        Color color { get; set; }
-    }
+	public interface IColorGear
+	{
+		Color color { get; set; }
+	}
 }

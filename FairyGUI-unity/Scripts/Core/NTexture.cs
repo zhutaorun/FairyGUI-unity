@@ -3,114 +3,114 @@ using UnityEngine;
 
 namespace FairyGUI
 {
-    public class NTexture
-    {
-        public Texture nativeTexture { get; private set; }
-        public Texture alphaTexture { get; set; }
-        public NTexture root { get; private set; }
-        public Rect uvRect { get; private set; }
-        public Dictionary<string, MaterialManager> materialManagers { get; internal set; }
-        public int refCount;
+	public class NTexture
+	{
+		public Texture nativeTexture { get; private set; }
+		public Texture alphaTexture { get; set; }
+		public NTexture root { get; private set; }
+		public Rect uvRect { get; private set; }
+		public Dictionary<string, MaterialManager> materialManagers { get; internal set; }
+		public int refCount;
 
-        Rect? _region;
+		Rect? _region;
 
-        static Texture2D _emptyTexture;
-        static NTexture _empty;
-        public static NTexture Empty
-        {
-            get
-            {
-                if (_empty == null)
-                {
-                    _emptyTexture = new Texture2D(1, 1, TextureFormat.RGB24, false);
-                    _emptyTexture.SetPixel(0, 0, Color.white);
-                    _emptyTexture.Apply();
+		static Texture2D _emptyTexture;
+		static NTexture _empty;
+		public static NTexture Empty
+		{
+			get
+			{
+				if (_empty == null)
+				{
+					_emptyTexture = new Texture2D(1, 1, TextureFormat.RGB24, false);
+					_emptyTexture.SetPixel(0, 0, Color.white);
+					_emptyTexture.Apply();
 
-                    _empty = new NTexture(_emptyTexture);
-                }
-                return _empty;
-            }
-        }
+					_empty = new NTexture(_emptyTexture);
+				}
+				return _empty;
+			}
+		}
 
-        public NTexture(Texture texture)
-        {
-            root = this;
-            nativeTexture = texture;
-            uvRect = new Rect(0, 0, 1, 1);
-        }
+		public NTexture(Texture texture)
+		{
+			root = this;
+			nativeTexture = texture;
+			uvRect = new Rect(0, 0, 1, 1);
+		}
 
-        public NTexture(Texture texture, float xScale, float yScale)
-        {
-            root = this;
-            nativeTexture = texture;
-            uvRect = new Rect(0, 0, xScale, yScale);
-        }
+		public NTexture(Texture texture, float xScale, float yScale)
+		{
+			root = this;
+			nativeTexture = texture;
+			uvRect = new Rect(0, 0, xScale, yScale);
+		}
 
-        public NTexture(Texture texture, Rect region)
-        {
-            root = this;
-            nativeTexture = texture;
-            _region = region;
-            uvRect = new Rect(region.x / nativeTexture.width, 1 - region.yMax / nativeTexture.height,
-                region.width / nativeTexture.width, region.height / nativeTexture.height);
-        }
+		public NTexture(Texture texture, Rect region)
+		{
+			root = this;
+			nativeTexture = texture;
+			_region = region;
+			uvRect = new Rect(region.x / nativeTexture.width, 1 - region.yMax / nativeTexture.height,
+				region.width / nativeTexture.width, region.height / nativeTexture.height);
+		}
 
-        public NTexture(NTexture root, Rect region)
-        {
-            this.root = root;
-            nativeTexture = root.nativeTexture;
+		public NTexture(NTexture root, Rect region)
+		{
+			this.root = root;
+			nativeTexture = root.nativeTexture;
 
-            if (root._region != null)
-            {
-                region.x += ((Rect)root._region).x;
-                region.y += ((Rect)root._region).y;
-            }
-            _region = region;
+			if (root._region != null)
+			{
+				region.x += ((Rect)root._region).x;
+				region.y += ((Rect)root._region).y;
+			}
+			_region = region;
 
-            uvRect = new Rect(region.x * root.uvRect.width / nativeTexture.width, 1 - region.yMax * root.uvRect.height / nativeTexture.height,
-                region.width * root.uvRect.width / nativeTexture.width, region.height * root.uvRect.height / nativeTexture.height);
-        }
+			uvRect = new Rect(region.x * root.uvRect.width / nativeTexture.width, 1 - region.yMax * root.uvRect.height / nativeTexture.height,
+				region.width * root.uvRect.width / nativeTexture.width, region.height * root.uvRect.height / nativeTexture.height);
+		}
 
-        public int width
-        {
-            get
-            {
-                if (_region != null)
-                    return (int)((Rect)_region).width;
-                else
-                    return nativeTexture.width;
-            }
-        }
+		public int width
+		{
+			get
+			{
+				if (_region != null)
+					return (int)((Rect)_region).width;
+				else
+					return nativeTexture.width;
+			}
+		}
 
-        public int height
-        {
-            get
-            {
-                if (_region != null)
-                    return (int)((Rect)_region).height;
-                else
-                    return nativeTexture.height;
-            }
-        }
+		public int height
+		{
+			get
+			{
+				if (_region != null)
+					return (int)((Rect)_region).height;
+				else
+					return nativeTexture.height;
+			}
+		}
 
-        public void Dispose()
-        {
-            if (materialManagers != null)
-            {
-                foreach (KeyValuePair<string, MaterialManager> mm in materialManagers)
-                {
-                    mm.Value.Dispose();
-                }
-                materialManagers = null;
-            }
+		public void Dispose()
+		{
+			if (materialManagers != null)
+			{
+				foreach (KeyValuePair<string, MaterialManager> mm in materialManagers)
+				{
+					mm.Value.Dispose();
+				}
+				materialManagers = null;
+			}
 
-            if (nativeTexture != null)
-            {
-                if (root == null && nativeTexture != _emptyTexture)
-                    Texture.Destroy(nativeTexture);
-                nativeTexture = null;
-                root = null;
-            }
-        }
-    }
+			if (nativeTexture != null)
+			{
+				if (root == null && nativeTexture != _emptyTexture)
+					Texture.Destroy(nativeTexture);
+				nativeTexture = null;
+				root = null;
+			}
+		}
+	}
 }
