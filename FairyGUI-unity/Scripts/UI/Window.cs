@@ -129,7 +129,7 @@ namespace FairyGUI
 			GRoot.inst.ShowWindow(this);
 		}
 
-		public void showOn(GRoot r)
+		public void ShowOn(GRoot r)
 		{
 			r.ShowWindow(this);
 		}
