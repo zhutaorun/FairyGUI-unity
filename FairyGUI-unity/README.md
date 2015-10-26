@@ -2,12 +2,12 @@ How to compile
 ====
 
 * Unity 5.x
-No conditional compilation symbols needed.
+Conditional compilation symbols: UNITY_5
 
 * Unity 4.6.x
-Conditional compilation symbols: UNITY_5_0_DOWNWARDS
+Conditional compilation symbols: UNITY_4_6
 
 * Unity 4.x
-Conditional compilation symbols: UNITY_5_0_DOWNWARDS,UNITY_4_6_DOWNWARDS
+No conditional compilation symbols needed.
 
 And be sure to put the correct version of UnityEngine.dll in 'Lib' directory.

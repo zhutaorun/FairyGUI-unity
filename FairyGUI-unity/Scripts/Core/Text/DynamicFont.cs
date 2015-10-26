@@ -49,7 +49,7 @@ namespace FairyGUI
 			_font = (Font)Resources.Load(name, typeof(Font));
 			if (_font == null)
 				_font = (Font)Resources.Load("Fonts/" + name, typeof(Font));
-#if !UNITY_5_0_DOWNWARDS
+#if UNITY_5
 			if (_font == null)
 			{
 				if (name.IndexOf(",") != -1)
@@ -78,10 +78,11 @@ namespace FairyGUI
 					throw new Exception("Cant load font '" + name + "'");
 			}
 
-#if UNITY_5_0_DOWNWARDS
-			_font.textureRebuildCallback += textureRebuildCallback;
-#else
+#if UNITY_5
 			Font.textureRebuilt += textureRebuildCallback;
+
+#else
+			_font.textureRebuildCallback += textureRebuildCallback;
 #endif
 			this.mainTexture = new NTexture(_font.material.mainTexture);
 		}
@@ -123,10 +124,10 @@ namespace FairyGUI
 				realSize = Mathf.FloorToInt(size * scale) - 1;
 			if (_font.GetCharacterInfo(ch, out sTempChar, realSize, _style))
 			{
-#if UNITY_5_0_DOWNWARDS
-				width = Mathf.RoundToInt(sTempChar.width);
-#else
+#if UNITY_5
 				width = Mathf.RoundToInt(sTempChar.advance);
+#else
+				width = Mathf.RoundToInt(sTempChar.width);
 #endif
 				height = Mathf.RoundToInt(sTempChar.size);
 				if (customBold)
@@ -159,7 +160,23 @@ namespace FairyGUI
 					baseline = GetBaseLine(realSize);
 					_lastBaseLine = baseline;
 				}
-#if UNITY_5_0_DOWNWARDS
+#if UNITY_5
+				glyhInfo.vert.xMin = sTempChar.minX;
+				glyhInfo.vert.yMin = sTempChar.minY - baseline;
+				glyhInfo.vert.xMax = sTempChar.maxX;
+				if (sTempChar.glyphWidth == 0) //zero width, space etc
+					glyhInfo.vert.xMax = glyhInfo.vert.xMin + realSize / 2;
+				glyhInfo.vert.yMax = sTempChar.maxY - baseline;
+				glyhInfo.uvTopLeft = sTempChar.uvTopLeft;
+				glyhInfo.uvBottomLeft = sTempChar.uvBottomLeft;
+				glyhInfo.uvTopRight = sTempChar.uvTopRight;
+				glyhInfo.uvBottomRight = sTempChar.uvBottomRight;
+
+				glyhInfo.width = Mathf.RoundToInt(sTempChar.advance);
+				glyhInfo.height = Mathf.RoundToInt(sTempChar.size);
+				if (customBold)
+					glyhInfo.width++;
+#else
 				glyhInfo.vert.xMin = sTempChar.vert.xMin;
 				glyhInfo.vert.yMin = sTempChar.vert.yMax - baseline;
 				glyhInfo.vert.xMax = sTempChar.vert.xMax;
@@ -185,22 +202,6 @@ namespace FairyGUI
 				glyhInfo.height = Mathf.RoundToInt(sTempChar.size);
 				if (customBold)
 					glyhInfo.width++;
-#else
-				glyhInfo.vert.xMin = sTempChar.minX;
-				glyhInfo.vert.yMin = sTempChar.minY - baseline;
-				glyhInfo.vert.xMax = sTempChar.maxX;
-				if (sTempChar.glyphWidth == 0) //zero width, space etc
-					glyhInfo.vert.xMax = glyhInfo.vert.xMin + realSize / 2;
-				glyhInfo.vert.yMax = sTempChar.maxY - baseline;
-				glyhInfo.uvTopLeft = sTempChar.uvTopLeft;
-				glyhInfo.uvBottomLeft = sTempChar.uvBottomLeft;
-				glyhInfo.uvTopRight = sTempChar.uvTopRight;
-				glyhInfo.uvBottomRight = sTempChar.uvBottomRight;
-
-				glyhInfo.width = Mathf.RoundToInt(sTempChar.advance);
-				glyhInfo.height = Mathf.RoundToInt(sTempChar.size);
-				if (customBold)
-					glyhInfo.width++;
 #endif
 				return glyhInfo;
 			}
@@ -208,9 +209,11 @@ namespace FairyGUI
 				return null;
 		}
 
-#if UNITY_5_0_DOWNWARDS
-		void textureRebuildCallback()
+#if UNITY_5
+		void textureRebuildCallback(Font targetFont)
 		{
+			if (_font != targetFont)
+				return;
 			mainTexture = new NTexture(_font.material.mainTexture);
 
 			if (!_callingValidate)
@@ -218,10 +221,8 @@ namespace FairyGUI
 			//Debug.Log("Font texture rebuild: " + name + "," + mainTexture.width + "," + mainTexture.height);
 		}
 #else
-		void textureRebuildCallback(Font targetFont)
+		void textureRebuildCallback()
 		{
-			if (_font != targetFont)
-				return;
 			mainTexture = new NTexture(_font.material.mainTexture);
 
 			if (!_callingValidate)
@@ -247,40 +248,40 @@ namespace FairyGUI
 				_font.RequestCharactersInTexture("f|体_j", size, FontStyle.Normal);
 
 				//find the most top position
-#if UNITY_5_0_DOWNWARDS
+#if UNITY_5
 				float y0 = float.MinValue;
 				if (_font.GetCharacterInfo('f', out charInfo, size, FontStyle.Normal))
-					y0 = Mathf.Max(y0, charInfo.vert.yMin);
+					y0 = Mathf.Max(y0, charInfo.maxY);
 				if (_font.GetCharacterInfo('|', out charInfo, size, FontStyle.Normal))
-					y0 = Mathf.Max(y0, charInfo.vert.yMin);
+					y0 = Mathf.Max(y0, charInfo.maxY);
 				if (_font.GetCharacterInfo('体', out charInfo, size, FontStyle.Normal))
-					y0 = Mathf.Max(y0, charInfo.vert.yMin);
+					y0 = Mathf.Max(y0, charInfo.maxY);
 
 				//find the most bottom position
 				float y1 = float.MaxValue;
 				if (_font.GetCharacterInfo('_', out charInfo, size, FontStyle.Normal))
-					y1 = Mathf.Min(y1, charInfo.vert.yMax);
+					y1 = Mathf.Min(y1, charInfo.minY);
 				if (_font.GetCharacterInfo('|', out charInfo, size, FontStyle.Normal))
-					y1 = Mathf.Min(y1, charInfo.vert.yMax);
+					y1 = Mathf.Min(y1, charInfo.minY);
 				if (_font.GetCharacterInfo('j', out charInfo, size, FontStyle.Normal))
-					y1 = Mathf.Min(y1, charInfo.vert.yMax);
+					y1 = Mathf.Min(y1, charInfo.minY);
 #else
 				float y0 = float.MinValue;
 				if (_font.GetCharacterInfo('f', out charInfo, size, FontStyle.Normal))
-					y0 = Mathf.Max(y0, charInfo.maxY);
+					y0 = Mathf.Max(y0, charInfo.vert.yMin);
 				if (_font.GetCharacterInfo('|', out charInfo, size, FontStyle.Normal))
-					y0 = Mathf.Max(y0, charInfo.maxY);
+					y0 = Mathf.Max(y0, charInfo.vert.yMin);
 				if (_font.GetCharacterInfo('体', out charInfo, size, FontStyle.Normal))
-					y0 = Mathf.Max(y0, charInfo.maxY);
+					y0 = Mathf.Max(y0, charInfo.vert.yMin);
 
 				//find the most bottom position
 				float y1 = float.MaxValue;
 				if (_font.GetCharacterInfo('_', out charInfo, size, FontStyle.Normal))
-					y1 = Mathf.Min(y1, charInfo.minY);
+					y1 = Mathf.Min(y1, charInfo.vert.yMax);
 				if (_font.GetCharacterInfo('|', out charInfo, size, FontStyle.Normal))
-					y1 = Mathf.Min(y1, charInfo.minY);
+					y1 = Mathf.Min(y1, charInfo.vert.yMax);
 				if (_font.GetCharacterInfo('j', out charInfo, size, FontStyle.Normal))
-					y1 = Mathf.Min(y1, charInfo.minY);
+					y1 = Mathf.Min(y1, charInfo.vert.yMax);
 #endif
 
 				result = y0 + (y0 - y1 - size) * 0.5f;

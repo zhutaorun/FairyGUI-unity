@@ -73,7 +73,11 @@ namespace FairyGUI
 
 		public static UIPackage AddPackage(AssetBundle desc, AssetBundle res, string resourceNamePrefix)
 		{
+#if UNITY_5
+			byte[] bytes = desc.LoadAsset<TextAsset>(desc.GetAllAssetNames()[0]).bytes;
+#else
 			byte[] bytes = ((TextAsset)desc.mainAsset).bytes;
+#endif
 			if (desc != res)
 				desc.Unload(true);
 			return AddPackage(bytes, res, resourceNamePrefix);
@@ -496,10 +500,10 @@ namespace FairyGUI
 
 						Texture2D tex;
 						if (_resBundle != null)
-#if UNITY_5_0_DOWNWARDS
-							tex = (Texture2D)_resBundle.Load(filePath, typeof(Texture2D));
-#else
+#if UNITY_5
 							tex = _resBundle.LoadAsset<Texture2D>(filePath);
+#else
+							tex = (Texture2D)_resBundle.Load(filePath, typeof(Texture2D));
 #endif
 						else
 							tex = (Texture2D)Resources.Load(filePath, typeof(Texture2D));
@@ -516,10 +520,10 @@ namespace FairyGUI
 
 							filePath = filePath + "!a";
 							if (_resBundle != null)
-#if UNITY_5_0_DOWNWARDS
-								tex = (Texture2D)_resBundle.Load(filePath, typeof(Texture2D));
-#else
+#if UNITY_5
 								tex = _resBundle.LoadAsset<Texture2D>(filePath);
+#else
+								tex = (Texture2D)_resBundle.Load(filePath, typeof(Texture2D));
 #endif
 							else
 								tex = (Texture2D)Resources.Load(filePath, typeof(Texture2D));
@@ -535,10 +539,10 @@ namespace FairyGUI
 						item.decoded = true;
 						string fileName = _resourceNamePrefix + Path.GetFileNameWithoutExtension(item.file);
 						if (_resBundle != null)
-#if UNITY_5_0_DOWNWARDS
-							item.audioClip = (AudioClip)_resBundle.Load(fileName, typeof(AudioClip));
-#else
+#if UNITY_5
 							item.audioClip = _resBundle.LoadAsset<AudioClip>(fileName);
+#else
+							item.audioClip = (AudioClip)_resBundle.Load(fileName, typeof(AudioClip));
 #endif
 						else
 							item.audioClip = (AudioClip)Resources.Load(fileName, typeof(AudioClip));
@@ -680,10 +684,10 @@ namespace FairyGUI
 			fileName = _resourceNamePrefix + Path.GetFileNameWithoutExtension(fileName);
 			TextAsset ta;
 			if (_resBundle != null)
-#if UNITY_5_0_DOWNWARDS
-				ta = (TextAsset)_resBundle.Load(fileName, typeof(TextAsset));
-#else
+#if UNITY_5
 				ta = _resBundle.LoadAsset<TextAsset>(fileName);
+#else
+				ta = (TextAsset)_resBundle.Load(fileName, typeof(TextAsset));
 #endif
 			else
 				ta = (TextAsset)Resources.Load(fileName, typeof(TextAsset));

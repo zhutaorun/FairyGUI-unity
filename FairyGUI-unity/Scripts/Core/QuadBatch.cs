@@ -56,10 +56,10 @@ namespace FairyGUI
 			_shader = ShaderConfig.imageShader;
 			meshFilter = gameObject.AddComponent<MeshFilter>();
 			meshRenderer = gameObject.AddComponent<MeshRenderer>();
-#if UNITY_5_0_DOWNWARDS
-            meshRenderer.castShadows = false;
-#else
+#if UNITY_5
 			meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+#else
+            meshRenderer.castShadows = false;
 #endif
 			meshRenderer.receiveShadows = false;
 			mesh = new Mesh();

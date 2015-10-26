@@ -483,7 +483,7 @@ namespace FairyGUI
 		{
 			if (parent != null && _visible)
 			{
-#if !(UNITY_4_6_DOWNWARDS)
+#if (UNITY_4_6 || UNITY_5)
 				cachedTransform.SetParent(parent.cachedTransform, false);
 #else
                 cachedTransform.parent = parent.cachedTransform;
@@ -496,10 +496,10 @@ namespace FairyGUI
 			}
 			else
 			{
-#if !(UNITY_4_6_DOWNWARDS)
+#if (UNITY_4_6 || UNITY_5)
 				cachedTransform.SetParent(null, false);
 #else
-                cachedTransform.parent = null;
+				cachedTransform.parent = null;
 #endif
 				gameObject.hideFlags = HideFlags.HideInHierarchy;
 				gameObject.SetActive(false);
