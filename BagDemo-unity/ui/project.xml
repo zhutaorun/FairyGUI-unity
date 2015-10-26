@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<projectDescription name="BagDemo" type="Unity" id="e2a4992afcc8583404d5ae3e6f32013f">
+  <packages>
+    <package id="y768eypa" name="Bag"/>
+  </packages>
+  <textSetting font="Heiti SC Medium,宋体" size="12" color="#000000"/>
+  <scrollBars vertical="" horizontal="" defaultDisplay="visible"/>
+</projectDescription>

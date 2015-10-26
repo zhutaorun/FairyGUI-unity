@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 1433894885
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: f690f9693d12fdbbcd98903658ae68c6
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 7c0a6a24fc909dd95208e56e2ca96f9c
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+Assets:
+- Assets/Sources/icons/i0.png
+Dependencies: []

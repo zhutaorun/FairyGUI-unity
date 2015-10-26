@@ -1,0 +1,33 @@
+ManifestFileVersion: 0
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: i0.ab
+      Dependencies: {}
+    Info_1:
+      Name: i1.ab
+      Dependencies: {}
+    Info_2:
+      Name: i2.ab
+      Dependencies: {}
+    Info_3:
+      Name: i3.ab
+      Dependencies: {}
+    Info_4:
+      Name: i4.ab
+      Dependencies: {}
+    Info_5:
+      Name: i5.ab
+      Dependencies: {}
+    Info_6:
+      Name: i6.ab
+      Dependencies: {}
+    Info_7:
+      Name: i7.ab
+      Dependencies: {}
+    Info_8:
+      Name: i8.ab
+      Dependencies: {}
+    Info_9:
+      Name: i9.ab
+      Dependencies: {}
