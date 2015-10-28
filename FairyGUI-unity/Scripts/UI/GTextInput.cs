@@ -7,6 +7,7 @@ namespace FairyGUI
 		{
 			_textField.autoSize = false;
 			_textField.wordWrap = false;
+			_textField.onChanged.AddCapture(__onChanged);
 		}
 
 		public bool editable
@@ -43,16 +44,16 @@ namespace FairyGUI
 			_textField.ReplaceSelection(value);
 		}
 
-		override protected void DoAlign()
-		{
-			//not support
-		}
-
 		override protected void CreateDisplayObject()
 		{
 			base.CreateDisplayObject();
 
 			_textField.input = true;
+		}
+
+		void __onChanged(EventContext context)
+		{
+			UpdateSize();
 		}
 	}
 }

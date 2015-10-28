@@ -72,7 +72,6 @@ namespace FairyGUI
 			{
 				if (value == null)
 					value = "";
-				_textField.text = value;
 				_textField.width = this.width * GRoot.contentScaleFactor;
 				if (_ubbEnabled)
 					_textField.htmlText = UBBParser.inst.Parse(XML.EncodeString(value));
@@ -232,6 +231,11 @@ namespace FairyGUI
 			}
 		}
 
+		public float textWidth
+		{
+			get { return _textWidth / GRoot.contentScaleFactor; }
+		}
+
 		override public void HandleControllerChanged(Controller c)
 		{
 			base.HandleControllerChanged(c);
@@ -256,7 +260,7 @@ namespace FairyGUI
 				UpdateSize();
 		}
 
-		private void UpdateSize()
+		virtual protected void UpdateSize()
 		{
 			if (_updatingSize)
 				return;

@@ -338,7 +338,10 @@ namespace FairyGUI
 				string s = _mobileInputAdapter.GetInput();
 
 				if (s != null && s != _text)
+				{
 					this.text = s;
+					onChanged.Call();
+				}
 			}
 
 			if (_caret != null)

@@ -61,7 +61,7 @@ namespace FairyGUI
 				UpdateSize();
 		}
 
-		private void UpdateSize()
+		override protected void UpdateSize()
 		{
 			if (_updatingSize)
 				return;
@@ -121,7 +121,20 @@ namespace FairyGUI
 
 		override protected void DoAlign()
 		{
-			//not support
+			_richTextField.align = _align;
+			if (_verticalAlign == VertAlignType.Top || _textHeight == 0)
+				_yOffset = 0;
+			else
+			{
+				float dh = this.height * GRoot.contentScaleFactor - _textHeight;
+				if (dh < 0)
+					dh = 0;
+				if (_verticalAlign == VertAlignType.Middle)
+					_yOffset = Mathf.FloorToInt(dh / 2);
+				else
+					_yOffset = Mathf.FloorToInt(dh);
+			}
+			HandleXYChanged();
 		}
 
 		override protected void HandleSizeChanged()
