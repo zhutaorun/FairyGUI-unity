@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="1136,640">
+  <displayList>
+    <image id="n7" name="joystick_center" src="q9do1a" xy="179,422"/>
+    <component id="n4" name="joystick" src="q9do18" xy="109,351"/>
+    <graph id="n2" name="joystick_touch" xy="29,330" size="374,254" type="rect" lineSize="0" fillColor="#00ffffff">
+      <relation target="" sidePair="left-left,bottom-bottom"/>
+    </graph>
+  </displayList>
+</component>

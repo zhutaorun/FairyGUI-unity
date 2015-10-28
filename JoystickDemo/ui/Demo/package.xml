@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="rbw1tv9t" jpegQuality="80" compressPNG="true">
+  <resources>
+    <component id="iitt1" name="Main" folder="" file="iitt1.xml" exported="true"/>
+    <component id="q9do18" name="方向盘" folder="" file="q9do18.xml"/>
+    <image id="q9do19" name="控制柄_中心球体.png" folder="" qualityOption="source" file="q9do19.png" size="178,160"/>
+    <image id="q9do1a" name="控制柄_静止状态.png" folder="" qualityOption="source" file="q9do1a.png" size="76,77"/>
+  </resources>
+  <publish name="JoystickDemo">
+    <atlas name="默认" index="0"/>
+  </publish>
+</packageDescription>
