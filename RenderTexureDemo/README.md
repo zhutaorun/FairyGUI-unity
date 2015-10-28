@@ -1,4 +1,4 @@
-This demo shows how how to display models on UI.
+This demo shows how to display models on UI.
 
 这个示例演示了如何利用RenderTexture在UI上显示3D模型。
 
