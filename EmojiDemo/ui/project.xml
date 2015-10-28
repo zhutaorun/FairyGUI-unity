@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<projectDescription name="EmojiDemo" type="Unity" id="e2a4992afcc8583404d5ae3e6f32012a">
+  <packages>
+    <package id="y768eypa" name="Demo"/>
+  </packages>
+  <textSetting font="Heiti SC Medium,宋体" size="12" color="#000000"/>
+  <scrollBars vertical="ui://y768eypakfcb1e" horizontal="" defaultDisplay="auto"/>
+  <colorScheme value="自定义颜色 #FF0000"/>
+  <fontSizeScheme value="自定义字体大小 30"/>
+</projectDescription>
