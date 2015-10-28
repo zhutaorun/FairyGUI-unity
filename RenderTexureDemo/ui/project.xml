@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<projectDescription name="RenderTextureDemo" type="Unity" id="5b85d3c8fa4ef4d0cc856c635439091d">
+  <packages>
+    <package id="rbw1tv9t" name="Demo"/>
+  </packages>
+  <textSetting font="Heiti SC Medium,宋体" size="12"/>
+  <scrollBars/>
+</projectDescription>

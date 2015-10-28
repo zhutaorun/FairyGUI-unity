@@ -1,0 +1,8 @@
+<component size="1136,640">
+  <displayList>
+    <component id="n0" name="bagBtn" src="iitt2" xy="29,505" group="n1"/>
+    <group id="n1" name="n1" xy="29,540" size="90,100" advanced="true">
+      <relation target="" sidePair="bottom-bottom"/>
+    </group>
+  </displayList>
+</component>
