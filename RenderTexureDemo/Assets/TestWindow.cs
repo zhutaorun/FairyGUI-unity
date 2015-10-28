@@ -19,7 +19,7 @@ public class TestWindow : Window
 
 		_renderImage = new RenderImage(contentPane.GetChild("holder").asGraph);
 		//RenderImage是不透明的，可以设置最多两张图片作为背景图
-		_renderImage.SetBackground(contentPane.GetChild("n14"), contentPane.GetChild("frame").asCom.GetChild("n0"));
+		_renderImage.SetBackground(contentPane.GetChild("frame").asCom.GetChild("n0"), contentPane.GetChild("n20"));
 
 		contentPane.GetChild("btnLeft").onMouseDown.Add(__clickLeft);
 		contentPane.GetChild("btnRight").onMouseDown.Add(__clickRight);

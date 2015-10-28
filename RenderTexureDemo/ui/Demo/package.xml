@@ -19,6 +19,7 @@
     <component id="kotx12" name="ButtonLeft" folder="" file="kotx12.xml"/>
     <image id="kotx13" name="12" folder="iittg" qualityOption="package" file="kotx13.png" size="36,35"/>
     <image id="kotx14" name="11" folder="iittg" qualityOption="package" file="kotx14.png" size="36,35"/>
+    <image id="kotx15" name="13" folder="iittg" qualityOption="source" file="kotx15.png" size="484,432"/>
   </resources>
   <publish name="RenderTextureDemo">
     <atlas name="默认" index="0"/>

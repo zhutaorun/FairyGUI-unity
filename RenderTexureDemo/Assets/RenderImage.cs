@@ -147,7 +147,7 @@ public class RenderImage
 		_model = go.transform;
 		_model.SetParent(this._modelRoot, false);
 
-		this._modelRoot.localPosition = new Vector3(0, -1.2f, 5f);
+		this._modelRoot.localPosition = new Vector3(0, -1.0f, 5f);
 		this._modelRoot.localScale = new Vector3(1, 1, 1);
 		this._modelRoot.localRotation = Quaternion.Euler(0, 120, 0);
 	}
